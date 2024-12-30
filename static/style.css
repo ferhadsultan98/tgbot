@@ -1,0 +1,83 @@
+/* Genel sayfa stili */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 36px;
+    color: #1f78d1;
+}
+
+header p {
+    font-size: 18px;
+    color: #555;
+}
+
+.instructions {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.instructions h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.instructions ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.instructions li {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #777;
+}
+
+/* Responsive Tasarım */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    .instructions h2 {
+        font-size: 20px;
+    }
+
+    .instructions li {
+        font-size: 16px;
+    }
+}
