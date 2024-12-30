@@ -1,4 +1,4 @@
-flask
-python-telegram-bot
-instaloader
+Flask==2.0.1
+python-telegram-bot==20.0
+instaloader==4.9.10
 gunicorn==20.1.0
