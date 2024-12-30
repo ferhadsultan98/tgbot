@@ -4,6 +4,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 import instaloader
 from flask import Flask, render_template
+from threading import Thread
 
 # Flask Uygulaması
 app = Flask(__name__)
@@ -98,6 +99,9 @@ async def list_users(update: Update, context: CallbackContext):
 def index():
     return render_template('index.html')
 
+def run_flask():
+    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
+
 def main():
     # Application kullanımı
     application = Application.builder().token(TOKEN).build()
@@ -110,9 +114,8 @@ def main():
     application.run_polling(drop_pending_updates=True)  # Bu metot daha verimli bir polling sağlar
 
 if __name__ == '__main__':
-    from threading import Thread
     # Flask'ı ayrı bir thread'de çalıştırıyoruz
-    flask_thread = Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 5000, 'debug': True, 'use_reloader': False})
+    flask_thread = Thread(target=run_flask)
     flask_thread.start()
 
     # Telegram botu çalıştır
