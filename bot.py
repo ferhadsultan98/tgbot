@@ -1,9 +1,12 @@
-# bot.py
-import logging
+from flask import Flask, render_template
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 import instaloader
+from threading import Thread
 import os
+
+# Flask Uygulaması
+app = Flask(__name__)  # Flask uygulamanız burada tanımlanıyor
 
 # Telegram bot tokenınızı buraya yazın
 TOKEN = '7776707741:AAF_ZKRfjt-yGn2fYJVwXfCQZtg95vaAxDA'
@@ -15,69 +18,15 @@ loader = instaloader.Instaloader()
 USER_FILE = 'users.txt'
 
 # Logging
+import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Instagram video veya fotoğraf indirme fonksiyonu
-def download_instagram_media(url):
-    try:
-        # URL üzerinden medya (fotoğraf, video) indirme
-        shortcode = url.split("/")[-2]  # URL'den shortcode'u alıyoruz
-        post = instaloader.Post.from_shortcode(loader.context, shortcode)
-
-        # Medya tipi fotoğraf mı, video mu?
-        if post.is_video:
-            media_url = post.video_url
-            return "video", media_url
-        else:
-            media_url = post.url
-            return "photo", media_url
-    except Exception as e:
-        logger.error(f"Medya indirilirken hata oluştu: {e}")
-        return None, None
-
-# Kullanıcıları kaydedeceğimiz fonksiyon
-def save_user(user_id):
-    if not os.path.exists(USER_FILE):
-        # Dosya yoksa oluştur
-        with open(USER_FILE, 'w') as file:
-            file.write(f"{user_id}\n")
-    else:
-        # Dosyaya ekle
-        with open(USER_FILE, 'a') as file:
-            file.write(f"{user_id}\n")
-
-# /start komutu
-async def start(update: Update, context: CallbackContext):
-    user_id = update.message.from_user.id
-    # Kullanıcıyı kaydet
-    save_user(user_id)
-    
-    await update.message.reply_text(
-        "Salam. Zəhmət olmasa Instagram Linkinizi göndərin! ♥"
-    )
-
-# Video veya fotoğraf indirme ve gönderme
-async def handle_instagram_link(update: Update, context: CallbackContext):
-    url = update.message.text
-
-    if 'instagram.com' in url:
-        media_type, media_url = download_instagram_media(url)
-        
-        if media_type == "photo":
-            # Fotoğraf ise gönder
-            await update.message.reply_text("Şəklinizi tezliklə sizə təqdim edirəm.")
-            await update.message.reply_photo(media_url)
-        elif media_type == "video":
-            # Video ise gönder
-            await update.message.reply_text("Videonuzu tezliklə sizə təqdim edirəm.")
-            await update.message.reply_video(media_url)
-        else:
-            # Medya tipi tanınmadıysa hata mesajı
-            await update.message.reply_text("Doğru link göndərdiyindən əminsən dostum?.")
-    else:
-        await update.message.reply_text("Zəhmət olmasa doğru link göndərin.")
+# Flask index route
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 # Telegram botunu çalıştıracak fonksiyon
 def run_telegram_bot():
@@ -91,5 +40,14 @@ def run_telegram_bot():
     # Botu başlat
     application.run_polling(drop_pending_updates=True)  # Bu metot daha verimli bir polling sağlar
 
-if __name__ == '__main__':
+# Flask ve Telegram botunu paralel çalıştırma
+def main():
+    # Flask'ı ayrı bir thread'de çalıştırıyoruz
+    flask_thread = Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 5000, 'debug': True, 'use_reloader': False})
+    flask_thread.start()
+
+    # Telegram botunu çalıştır
     run_telegram_bot()
+
+if __name__ == '__main__':
+    main()
