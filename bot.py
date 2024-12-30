@@ -5,12 +5,13 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import instaloader
 from flask import Flask, render_template
 from threading import Thread
+import os
 
 # Flask Uygulaması
 app = Flask(__name__)
 
 # Telegram bot tokenınızı buraya yazın
-TOKEN = '7776707741:AAF_ZKRfjt-yGn2fYJVwXfCQZtg95vaAxDA'  # BotFather'dan aldığınız token
+TOKEN = '7776707741:AAF_ZKRfjt-yGn2fYJVwXfCQZtg95vaAxDA'
 
 # Instagram video ve fotoğraf indirmek için instaloader
 loader = instaloader.Instaloader()
@@ -99,10 +100,8 @@ async def list_users(update: Update, context: CallbackContext):
 def index():
     return render_template('index.html')
 
-def run_flask():
-    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
-
-def main():
+# Telegram botunu çalıştıracak fonksiyon
+def run_telegram_bot():
     # Application kullanımı
     application = Application.builder().token(TOKEN).build()
 
@@ -113,10 +112,14 @@ def main():
     # Botu başlat
     application.run_polling(drop_pending_updates=True)  # Bu metot daha verimli bir polling sağlar
 
-if __name__ == '__main__':
+# Flask ve Telegram botunu paralel çalıştırma
+def main():
     # Flask'ı ayrı bir thread'de çalıştırıyoruz
-    flask_thread = Thread(target=run_flask)
+    flask_thread = Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 5000, 'debug': True, 'use_reloader': False})
     flask_thread.start()
 
-    # Telegram botu çalıştır
+    # Telegram botunu çalıştır
+    run_telegram_bot()
+
+if __name__ == '__main__':
     main()
