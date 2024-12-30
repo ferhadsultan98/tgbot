@@ -1,14 +1,9 @@
+# bot.py
 import logging
-import os
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 import instaloader
-from flask import Flask, render_template
-from threading import Thread
 import os
-
-# Flask Uygulaması
-app = Flask(__name__)
 
 # Telegram bot tokenınızı buraya yazın
 TOKEN = '7776707741:AAF_ZKRfjt-yGn2fYJVwXfCQZtg95vaAxDA'
@@ -84,22 +79,6 @@ async def handle_instagram_link(update: Update, context: CallbackContext):
     else:
         await update.message.reply_text("Zəhmət olmasa doğru link göndərin.")
 
-# Kullanıcıları listeleme fonksiyonu
-async def list_users(update: Update, context: CallbackContext):
-    try:
-        with open(USER_FILE, 'r') as file:
-            users = file.readlines()
-        users = [user.strip() for user in users]
-        user_list = "\n".join(users)
-        await update.message.reply_text(f"Botu kullanan kullanıcılar:\n{user_list}")
-    except FileNotFoundError:
-        await update.message.reply_text("Henüz botu kullanan kimse yok.")
-
-# Flask index route
-@app.route('/')
-def index():
-    return render_template('index.html')
-
 # Telegram botunu çalıştıracak fonksiyon
 def run_telegram_bot():
     # Application kullanımı
@@ -112,14 +91,5 @@ def run_telegram_bot():
     # Botu başlat
     application.run_polling(drop_pending_updates=True)  # Bu metot daha verimli bir polling sağlar
 
-# Flask ve Telegram botunu paralel çalıştırma
-def main():
-    # Flask'ı ayrı bir thread'de çalıştırıyoruz
-    flask_thread = Thread(target=app.run, kwargs={'host': '0.0.0.0', 'port': 5000, 'debug': True, 'use_reloader': False})
-    flask_thread.start()
-
-    # Telegram botunu çalıştır
-    run_telegram_bot()
-
 if __name__ == '__main__':
-    main()
+    run_telegram_bot()
