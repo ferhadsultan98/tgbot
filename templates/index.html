@@ -1,29 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Media Downloader Bot</title>
+    <title>Instagram Media Yükləyici Botu</title>
+    <!-- Instagram Favicon əlavə etmək -->
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Instagram Media Downloader Bot</h1>
-            <p>Instagram video ve fotoğraf linkinizi gönderin, hemen indirin!</p>
+            <h1>Instagram Media Yükləyici Botu</h1>
+            <p class="description">Instagram video və foto linkinizi göndərin, dərhal yükləyin!</p>
         </header>
 
+        <section class="main-content">
+            <div class="input-section">
+                <h2>Link Göndərin</h2>
+                <p>Instagram-dan istədiyiniz bir foto və ya video linkini daxil edin:</p>
+                <form id="url-form">
+                    <input type="url" id="media-url" placeholder="Instagram linkini daxil edin..." required>
+                    <button type="submit">Yüklə</button>
+                </form>
+            </div>
+            <div id="response-section" class="response-section" style="display: none;">
+                <h2>Yüklənə bilən Media</h2>
+                <div id="media-content"></div>
+                <p><strong>Yükləmə Linki:</strong> <a href="#" id="download-link" target="_blank">Yüklə</a></p>
+            </div>
+        </section>
+
         <section class="instructions">
-            <h2>Nasıl Kullanılır?</h2>
+            <h2>Necə İstifadə Edilir?</h2>
             <ul>
-                <li>Instagram'dan istediğiniz bir fotoğraf ya da video linkini gönderin.</li>
-                <li>Bot, linkinizi analiz ederek uygun medya dosyasını size sunacaktır.</li>
+                <li>Instagram-dan istədiyiniz bir foto və ya video linkini göndərin.</li>
+                <li>Bot, linkinizi analiz edərək uyğun media faylını sizə təqdim edəcək.</li>
+                <li>Əlaqəli media linkinə klikləyərək yükləmə əməliyyatını başlata bilərsiniz.</li>
             </ul>
         </section>
 
         <footer>
-            <p>Instagram Downloader Bot © 2024</p>
+            <p>Instagram Yükləyici Botu © 2024 | Yaradıcısı: <strong>Farhad Sultan</strong></p>
         </footer>
     </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
