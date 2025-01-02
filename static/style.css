@@ -1,83 +1,124 @@
-/* Genel sayfa stili */
-* {
+/* Genel stil ayarları */
+body {
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #f4f7fb;
     color: #333;
-    line-height: 1.6;
 }
 
+/* Konteyner düzeni */
 .container {
-    width: 80%;
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
+/* Başlık stil ayarları */
 header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 header h1 {
     font-size: 36px;
-    color: #1f78d1;
+    color: #333;
+    margin: 0;
 }
 
-header p {
+header .description {
     font-size: 18px;
     color: #555;
 }
 
-.instructions {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Ana içerik düzeni */
+.main-content {
+    margin-bottom: 30px;
 }
 
-.instructions h2 {
+/* Form alanları */
+.input-section {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-section h2 {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.input-section p {
+    font-size: 16px;
+    color: #666;
+}
+
+#media-url {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Yanıt bölüm düzeni */
+.response-section {
+    margin-top: 30px;
+    background-color: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    display: none; /* Başlangıçta gizli */
+}
+
+#media-content {
+    margin-bottom: 15px;
+}
+
+/* Kullanım talimatları */
+.instructions {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .instructions ul {
     list-style-type: none;
-    padding-left: 20px;
+    padding: 0;
 }
 
-.instructions li {
-    font-size: 18px;
+.instructions ul li {
+    font-size: 16px;
+    color: #555;
     margin: 10px 0;
 }
 
+/* Footer stil ayarları */
 footer {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 30px;
     font-size: 14px;
-    color: #777;
-}
-
-/* Responsive Tasarım */
-@media screen and (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
-
-    header h1 {
-        font-size: 28px;
-    }
-
-    .instructions h2 {
-        font-size: 20px;
-    }
-
-    .instructions li {
-        font-size: 16px;
-    }
+    color: #888;
 }
